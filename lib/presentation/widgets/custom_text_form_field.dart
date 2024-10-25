@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.controller,
     required this.onChanged,
     this.isPassword = false,
+    this.prefixIcon,
     super.key,
   });
 
@@ -14,6 +15,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onChanged;
   final bool? isPassword;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
       onChanged: onChanged,
       obscureText: isPassword ?? false,
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
         labelText: labelText,
         labelStyle: const TextStyle(color: Colors.grey),
         filled: true,

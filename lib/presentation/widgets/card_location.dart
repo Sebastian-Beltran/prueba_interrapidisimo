@@ -17,9 +17,10 @@ class CardLocation extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => LocationDetailScreen(
-                    location: location,
-                  )),
+            builder: (context) => LocationDetailScreen(
+              location: location,
+            ),
+          ),
         );
       },
       child: Card(
@@ -29,14 +30,8 @@ class CardLocation extends StatelessWidget {
         child: ListTile(
           leading: const Icon(
             Icons.location_on_outlined,
-            size: 50,
+            size: 40,
           ),
-          // trailing: Text(
-          //   id.toString(),
-          //   style: const TextStyle(
-          //     fontSize: 20,
-          //   ),
-          // ),
           title: Text(
             location.name,
             maxLines: 2,

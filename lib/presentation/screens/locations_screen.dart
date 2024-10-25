@@ -5,6 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:prueba_interrapidisimo/core/constants/palette.dart';
 import 'package:prueba_interrapidisimo/presentation/widgets/card_location.dart';
 import 'package:prueba_interrapidisimo/presentation/widgets/custom_app_bar.dart';
+import 'package:prueba_interrapidisimo/presentation/widgets/custom_text_form_field.dart';
 import 'package:prueba_interrapidisimo/presentation/widgets/list_friends.dart';
 import 'package:prueba_interrapidisimo/store/location_store.dart';
 
@@ -12,12 +13,13 @@ class LocationsScreen extends StatefulWidget {
   const LocationsScreen({super.key});
 
   @override
-  _LocationScreenState createState() => _LocationScreenState();
+  State<LocationsScreen> createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationsScreen> {
   final locationStore = GetIt.instance<LocationStore>();
   bool isValid = false;
+  final searchController = TextEditingController();
 
   @override
   void initState() {
@@ -28,10 +30,8 @@ class _LocationScreenState extends State<LocationsScreen> {
 
   Future<void> _checkPermissions() async {
     PermissionStatus permissionStatus = await Permission.location.status;
-
     if (permissionStatus.isDenied) {
       permissionStatus = await Permission.location.request();
-
       if (permissionStatus.isDenied) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Permiso de ubicación denegado')),
@@ -64,23 +64,38 @@ class _LocationScreenState extends State<LocationsScreen> {
       drawer: const Drawer(
         child: FriendsScreen(),
       ),
-      body: Observer(
-        builder: (_) {
-          final locations = locationStore.locations;
-          if (locations.isEmpty) {
-            return const Center(child: Text('No hay ubicaciones creadas'));
-          }
-
-          return ListView.builder(
-            itemCount: locations.length,
-            itemBuilder: (context, index) {
-              final location = locations[index];
-              return CardLocation(
-                location: location,
-              );
-            },
-          );
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            child: CustomTextFormField(
+              prefixIcon: const Icon(Icons.search),
+              controller: searchController,
+              labelText: 'Buscar ubicaciones',
+              onChanged: (value) => locationStore.filterLocationsByName(value),
+            ),
+          ),
+          Expanded(
+            child: Observer(
+              builder: (_) {
+                final locations = locationStore.filteredLocations;
+                if (locations.isEmpty) {
+                  return const Center(
+                      child: Text('No hay ubicaciones creadas'));
+                }
+                return ListView.builder(
+                  itemCount: locations.length,
+                  itemBuilder: (context, index) {
+                    final location = locations[index];
+                    return CardLocation(
+                      location: location,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: isValid
           ? FloatingActionButton(

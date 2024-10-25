@@ -25,6 +25,38 @@ mixin _$LocationStore on _LocationStore, Store {
     });
   }
 
+  late final _$filteredLocationsAtom =
+      Atom(name: '_LocationStore.filteredLocations', context: context);
+
+  @override
+  ObservableList<Location> get filteredLocations {
+    _$filteredLocationsAtom.reportRead();
+    return super.filteredLocations;
+  }
+
+  @override
+  set filteredLocations(ObservableList<Location> value) {
+    _$filteredLocationsAtom.reportWrite(value, super.filteredLocations, () {
+      super.filteredLocations = value;
+    });
+  }
+
+  late final _$searchQueryAtom =
+      Atom(name: '_LocationStore.searchQuery', context: context);
+
+  @override
+  String get searchQuery {
+    _$searchQueryAtom.reportRead();
+    return super.searchQuery;
+  }
+
+  @override
+  set searchQuery(String value) {
+    _$searchQueryAtom.reportWrite(value, super.searchQuery, () {
+      super.searchQuery = value;
+    });
+  }
+
   late final _$addLocationAsyncAction =
       AsyncAction('_LocationStore.addLocation', context: context);
 
@@ -41,10 +73,26 @@ mixin _$LocationStore on _LocationStore, Store {
     return _$loadLocationsAsyncAction.run(() => super.loadLocations());
   }
 
+  late final _$_LocationStoreActionController =
+      ActionController(name: '_LocationStore', context: context);
+
+  @override
+  void filterLocationsByName(String query) {
+    final _$actionInfo = _$_LocationStoreActionController.startAction(
+        name: '_LocationStore.filterLocationsByName');
+    try {
+      return super.filterLocationsByName(query);
+    } finally {
+      _$_LocationStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-locations: ${locations}
+locations: ${locations},
+filteredLocations: ${filteredLocations},
+searchQuery: ${searchQuery}
     ''';
   }
 }

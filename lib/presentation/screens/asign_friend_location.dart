@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:prueba_interrapidisimo/core/constants/palette.dart';
 import 'package:prueba_interrapidisimo/core/db/db_helper.dart';
 import 'package:prueba_interrapidisimo/data/models/friend_model.dart';
 import 'package:prueba_interrapidisimo/presentation/widgets/custom_app_bar.dart';
+import 'package:prueba_interrapidisimo/store/location_store.dart';
 
 class AsignFriendLocation extends StatefulWidget {
   const AsignFriendLocation({super.key});
@@ -13,6 +15,8 @@ class AsignFriendLocation extends StatefulWidget {
 
 class _AsignFriendLocationState extends State<AsignFriendLocation> {
   List<Friend> friends = [];
+
+  final locationStore = GetIt.instance<LocationStore>();
 
   @override
   void initState() {
@@ -90,8 +94,7 @@ class _AsignFriendLocationState extends State<AsignFriendLocation> {
   }
 
   Future<void> assignLocation(int locationId, int friendId) async {
-    final location = await DatabaseHelper.instance
-        .assignLocationToFriend(locationId, friendId);
-    Navigator.pop(context, location);
+    await DatabaseHelper.instance.assignLocationToFriend(locationId, friendId);
+    Navigator.pop(context, friendId);
   }
 }

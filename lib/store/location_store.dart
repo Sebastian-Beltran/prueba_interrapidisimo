@@ -11,6 +11,12 @@ abstract class _LocationStore with Store {
   @observable
   ObservableList<Location> locations = ObservableList<Location>();
 
+  @observable
+  ObservableList<Location> filteredLocations = ObservableList<Location>();
+
+  @observable
+  String searchQuery = "";
+
   @action
   Future<void> addLocation(Location location) async {
     if (locations.any((loc) =>
@@ -33,5 +39,19 @@ abstract class _LocationStore with Store {
     final dbLocations = await DatabaseHelper.instance.getAllLocations();
     locations.clear();
     locations.addAll(dbLocations);
+    filteredLocations = ObservableList.of(dbLocations);
+  }
+
+  @action
+  void filterLocationsByName(String query) {
+    searchQuery = query;
+    if (searchQuery.isEmpty) {
+      filteredLocations = ObservableList.of(locations);
+    } else {
+      filteredLocations = ObservableList.of(
+        locations.where((location) =>
+            location.name.toLowerCase().contains(searchQuery.toLowerCase())),
+      );
+    }
   }
 }

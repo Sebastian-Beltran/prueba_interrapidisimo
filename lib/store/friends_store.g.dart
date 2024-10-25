@@ -25,13 +25,38 @@ mixin _$FriendStore on _FriendStore, Store {
     });
   }
 
+  late final _$friendAtom = Atom(name: '_FriendStore.friend', context: context);
+
+  @override
+  Friend? get friend {
+    _$friendAtom.reportRead();
+    return super.friend;
+  }
+
+  @override
+  set friend(Friend? value) {
+    _$friendAtom.reportWrite(value, super.friend, () {
+      super.friend = value;
+    });
+  }
+
+  late final _$getFriendByIdAsyncAction =
+      AsyncAction('_FriendStore.getFriendById', context: context);
+
+  @override
+  Future<void> getFriendById(int friendId, LocationStore locationStore) {
+    return _$getFriendByIdAsyncAction
+        .run(() => super.getFriendById(friendId, locationStore));
+  }
+
   late final _$assignLocationToFriendAsyncAction =
       AsyncAction('_FriendStore.assignLocationToFriend', context: context);
 
   @override
-  Future assignLocationToFriend(int locationId, int friendId) {
-    return _$assignLocationToFriendAsyncAction
-        .run(() async => super.assignLocationToFriend(locationId, friendId));
+  Future assignLocationToFriend(
+      int locationId, int friendId, LocationStore locationStore) {
+    return _$assignLocationToFriendAsyncAction.run(() =>
+        super.assignLocationToFriend(locationId, friendId, locationStore));
   }
 
   late final _$_FriendStoreActionController =
@@ -51,7 +76,8 @@ mixin _$FriendStore on _FriendStore, Store {
   @override
   String toString() {
     return '''
-friends: ${friends}
+friends: ${friends},
+friend: ${friend}
     ''';
   }
 }

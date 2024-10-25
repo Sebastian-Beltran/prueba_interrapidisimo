@@ -19,7 +19,7 @@ class DatabaseHelper {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 13, onCreate: _createDB);
+    return await openDatabase(path, version: 14, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -163,6 +163,22 @@ class DatabaseHelper {
 
     if (maps.isNotEmpty) {
       return Friend.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Location?> getLocationById(int locationId) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'locations',
+      where: 'id = ?',
+      whereArgs: [locationId],
+    );
+
+    if (maps.isNotEmpty) {
+      return Location.fromMap(maps.first);
     } else {
       return null;
     }

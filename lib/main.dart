@@ -11,7 +11,6 @@ import 'package:prueba_interrapidisimo/presentation/screens/asign_friend_locatio
 import 'package:prueba_interrapidisimo/presentation/screens/friend_detail_screen.dart';
 import 'package:prueba_interrapidisimo/presentation/screens/locations_screen.dart';
 import 'package:prueba_interrapidisimo/presentation/screens/create_location_screen.dart';
-import 'package:prueba_interrapidisimo/presentation/screens/location_detail_screen.dart';
 import 'package:prueba_interrapidisimo/store/friends_store.dart';
 import 'package:prueba_interrapidisimo/store/location_store.dart';
 
@@ -55,7 +54,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const LocationsScreen(),
         '/create-location': (context) => const CreateLocationScreen(),
-        // '/detail-location': (context) => const LocationDetailScreen(),
         '/detail-friend': (context) => const FriendDetailScreen(),
         '/asign-friend': (context) => const AsignFriendLocation(),
       },

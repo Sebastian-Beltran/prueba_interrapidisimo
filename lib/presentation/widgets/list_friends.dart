@@ -7,7 +7,7 @@ class FriendsScreen extends StatefulWidget {
   const FriendsScreen({super.key});
 
   @override
-  _FriendsScreenState createState() => _FriendsScreenState();
+  State<FriendsScreen> createState() => _FriendsScreenState();
 }
 
 class _FriendsScreenState extends State<FriendsScreen> {

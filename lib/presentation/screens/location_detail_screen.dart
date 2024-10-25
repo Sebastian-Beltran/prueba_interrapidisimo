@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:prueba_interrapidisimo/core/db/db_helper.dart';
-import 'package:prueba_interrapidisimo/data/models/friend_model.dart';
 import 'package:prueba_interrapidisimo/data/models/location_model.dart';
 import 'package:prueba_interrapidisimo/presentation/widgets/custom_app_bar.dart';
 import 'package:prueba_interrapidisimo/store/friends_store.dart';
+import 'package:prueba_interrapidisimo/store/location_store.dart';
 
 class LocationDetailScreen extends StatefulWidget {
   const LocationDetailScreen({required this.location, super.key});
@@ -20,16 +19,30 @@ class LocationDetailScreen extends StatefulWidget {
 
 class _LocationDetailScreenState extends State<LocationDetailScreen> {
   final friendStore = GetIt.instance<FriendStore>();
+  final locationStore = GetIt.instance<LocationStore>();
+  int? friendIdAux;
 
   @override
   void initState() {
     super.initState();
-    friendStore.getFriendById(widget.location.id!);
+    locationStore.loadLocations();
+    if (widget.location.friendId != null) {
+      friendStore
+          .getFriendById(widget.location.friendId!, locationStore)
+          .then((_) {
+        setState(() {});
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al cargar amigo: $error')),
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final location = widget.location;
+    friendIdAux = widget.location.friendId;
     return Scaffold(
       appBar: CustomAppBar(title: location.name),
       body: Padding(
@@ -37,9 +50,9 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
         child: Column(
           children: [
             const SizedBox(height: 40),
-            Text(
-              '${location.id} Información ubicación ${location.friendId}',
-              style: const TextStyle(
+            const Text(
+              'Información ubicación',
+              style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -66,61 +79,33 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            location.friendId != null
-                ? Observer(
-                    builder: (context) {
-                      if (friendStore.friend == null) {
-                        return const Text('No hay ubicaciones asociadas');
-                      }
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(friendStore.friend!.firstName),
-                          IconButton(
-                            onPressed: () => _navigateToAsignLocation(
-                              location.id,
-                            ),
-                            icon: const Icon(Icons.cached_outlined),
-                          ),
-                        ],
-                      );
-                    },
-                  )
-                //  FutureBuilder<String>(
-                //     future: fetchFriend(location.friendId!),
-                //     builder: (context, snapshot) {
-                //       if (!snapshot.hasData) {
-                //         return const Center(child: CircularProgressIndicator());
-                //       }
-                //       final friend = snapshot.data!;
-                //       if (friend.isEmpty) {
-                //         return const Center(
-                //             child: Text('No hay ubicaciones asociadas'));
-                //       }
-                // return Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(friend),
-                //     IconButton(
-                //       onPressed: () => _navigateToAsignLocation(
-                //         location.id,
-                //       ),
-                //       icon: const Icon(Icons.cached_outlined),
-                //     ),
-                //   ],
-                // );
-                //     },
-                //   )
-                : Row(
+            Observer(
+              builder: (context) {
+                final friend = friendStore.friend;
+                if (friend == null) {
+                  return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('No hay amigos asignados ${location.id}'),
+                      const Text('No hay amigos asignados'),
                       IconButton(
                         onPressed: () => _navigateToAsignLocation(location.id),
                         icon: const Icon(Icons.add),
                       ),
                     ],
-                  ),
+                  );
+                }
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(friend.firstName),
+                    IconButton(
+                      onPressed: () => _navigateToAsignLocation(location.id),
+                      icon: const Icon(Icons.cached_outlined),
+                    ),
+                  ],
+                );
+              },
+            ),
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 10),
@@ -132,7 +117,7 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
               ),
             ),
             Expanded(
-              child: _buildPhotoGrid(location!),
+              child: _buildPhotoGrid(location),
             ),
           ],
         ),
@@ -141,15 +126,23 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
   }
 
   Future<void> _navigateToAsignLocation(int? locationId) async {
-    Navigator.pushNamed(
+    final result = await Navigator.pushNamed(
       context,
       '/asign-friend',
       arguments: locationId,
-    );
+    ) as int?;
+
+    if (result != null) {
+      friendIdAux = result;
+      await locationStore.loadLocations();
+      await friendStore.getFriendById(result, locationStore);
+      setState(() {});
+    }
+    setState(() {});
   }
 
   Future<void> fetchFriend(int friendId) async {
-    await friendStore.getFriendById(friendId);
+    await friendStore.getFriendById(friendId, locationStore);
   }
 
   Widget _buildPhotoGrid(Location location) {

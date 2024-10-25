@@ -17,7 +17,7 @@ class CreateLocationScreen extends StatefulWidget {
   });
 
   @override
-  _LocationScreenState createState() => _LocationScreenState();
+  State<CreateLocationScreen> createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<CreateLocationScreen> {
