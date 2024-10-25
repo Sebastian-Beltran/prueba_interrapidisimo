@@ -1,5 +1,5 @@
-# Challenge Interrapidisimo
-## Prueba tecnica Flutter developer - Inter Rapidisimo
+# Prueba técnica Inter Rapidisimo
+## Prueba técnica Flutter developer - Inter Rapidisimo
 
 Proyecto realizado para la prueba tecnica en Inter Rapidisimo, el proyecto consiste en la creación de ubicaciones y asignación de ubicaciones a usuarios, todo esto almacenandolo de manera local en una DB. para el proyecto utilize el gestor de estados [MobX](https://pub.dev/packages/mobx) y de base de datos utilice [Sqflite](https://pub.dev/packages/sqflite).💻
 
