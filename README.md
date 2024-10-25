@@ -48,13 +48,6 @@ Para correr el proyecto se debe correr el siguiente comando:
 flutter run
 ```
 
-## Testing
-El proyecto cuenta con widget testing, con el siguiente comando:
-
-```sh
-flutter test
-```
-
 ## Tecnologías Usadas
 - [Flutter](https://flutter.dev/) - Framework de desarrollo.
 - [Dart](https://dart.dev/) - Lenguaje de programación.
