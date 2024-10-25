@@ -22,17 +22,15 @@ class ListLocationsFriend extends StatelessWidget {
         final locations = snapshot.data!;
         if (locations.isEmpty) {
           return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 100.0),
-            child: Center(
-              child: Column(
-                children: [
-                  Text('No hay ubicaciones asociadas'),
-                  Icon(
-                    Icons.location_off_outlined,
-                    size: 80,
-                  )
-                ],
-              ),
+            padding: EdgeInsets.only(top: 20.0),
+            child: Column(
+              children: [
+                Text('No hay ubicaciones asociadas'),
+                Icon(
+                  Icons.location_off_outlined,
+                  size: 60,
+                )
+              ],
             ),
           );
         }

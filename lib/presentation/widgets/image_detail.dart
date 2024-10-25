@@ -16,8 +16,8 @@ class ImageDetail extends StatelessWidget {
     return Center(
       child: imgPath == null
           ? Container(
-              width: 250,
-              height: 250,
+              width: 100,
+              height: 100,
               decoration: BoxDecoration(
                 color: Palette.secondary,
                 borderRadius: BorderRadius.circular(1000),
@@ -35,8 +35,8 @@ class ImageDetail extends StatelessWidget {
           : ClipOval(
               child: Image.asset(
                 imgPath!,
-                width: 250,
-                height: 250,
+                width: 100,
+                height: 100,
                 fit: BoxFit.cover,
               ),
             ),

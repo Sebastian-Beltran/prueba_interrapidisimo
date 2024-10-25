@@ -17,15 +17,14 @@ class FriendDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             ImageDetail(
               imgPath: friend.photo,
               letter: friend.firstName.substring(0, 1),
             ),
             const SizedBox(height: 40),
             Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
                   Row(
                     children: [
