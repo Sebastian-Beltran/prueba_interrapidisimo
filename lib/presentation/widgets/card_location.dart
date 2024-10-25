@@ -25,7 +25,7 @@ class CardLocation extends StatelessWidget {
       },
       child: Card(
         elevation: 3,
-        margin: const EdgeInsets.all(20),
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 35),
         color: const Color.fromARGB(255, 255, 255, 255),
         child: ListTile(
           leading: const Icon(

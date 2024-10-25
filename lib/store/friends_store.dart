@@ -46,11 +46,7 @@ abstract class _FriendStore with Store {
         where: 'id = ?',
         whereArgs: [locationId],
       );
-      final updatedLocation =
-          await DatabaseHelper.instance.getLocationById(locationId);
-      if (updatedLocation != null) {
-        locationStore.updateLocation(updatedLocation);
-      }
+
       await getFriendById(friendId, locationStore);
     } catch (error) {
       throw Exception('Error al asignar la ubicación: $error');

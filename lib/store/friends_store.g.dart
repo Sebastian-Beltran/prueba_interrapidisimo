@@ -55,7 +55,7 @@ mixin _$FriendStore on _FriendStore, Store {
   @override
   Future assignLocationToFriend(
       int locationId, int friendId, LocationStore locationStore) {
-    return _$assignLocationToFriendAsyncAction.run(() =>
+    return _$assignLocationToFriendAsyncAction.run(() async =>
         super.assignLocationToFriend(locationId, friendId, locationStore));
   }
 

@@ -22,7 +22,7 @@ class FriendDetailScreen extends StatelessWidget {
               imgPath: friend.photo,
               letter: friend.firstName.substring(0, 1),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,7 +30,7 @@ class FriendDetailScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        Icons.email,
+                        Icons.mail_outline,
                         size: 18,
                       ),
                       const SizedBox(width: 5),
@@ -57,6 +57,7 @@ class FriendDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
+            const Divider(),
             const Text(
               'Ubicaciones asociadas ',
               style: TextStyle(

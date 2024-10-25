@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:prueba_interrapidisimo/core/constants/palette.dart';
 import 'package:prueba_interrapidisimo/data/models/location_model.dart';
 import 'package:prueba_interrapidisimo/presentation/widgets/custom_app_bar.dart';
 import 'package:prueba_interrapidisimo/store/friends_store.dart';
@@ -89,7 +90,11 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
                       const Text('No hay amigos asignados'),
                       IconButton(
                         onPressed: () => _navigateToAsignLocation(location.id),
-                        icon: const Icon(Icons.add),
+                        icon: Icon(
+                          Icons.add_circle,
+                          size: 30,
+                          color: Palette.primary,
+                        ),
                       ),
                     ],
                   );
@@ -97,10 +102,14 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(friend.firstName),
+                    Text('${friend.firstName} ${friend.lastName}'),
                     IconButton(
                       onPressed: () => _navigateToAsignLocation(location.id),
-                      icon: const Icon(Icons.cached_outlined),
+                      icon: Icon(
+                        Icons.change_circle,
+                        size: 30,
+                        color: Palette.primary,
+                      ),
                     ),
                   ],
                 );
