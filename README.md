@@ -1,16 +1,65 @@
-# prueba_interrapidisimo
+# Challenge Interrapidisimo
+## Prueba tecnica Flutter developer - Inter Rapidisimo
 
-A new Flutter project.
+Proyecto realizado para la prueba tecnica en Inter Rapidisimo, el proyecto consiste en la creación de ubicaciones y asignación de ubicaciones a usuarios, todo esto almacenandolo de manera local en una DB. para el proyecto utilize el gestor de estados [MobX](https://pub.dev/packages/mobx) y de base de datos utilice [Sqflite](https://pub.dev/packages/sqflite).💻
 
-## Getting Started
+## Características
+El proyecto se compone principalmente por 2 features principales:
+- Location (Ubicaciones): Las ubicaciones que se pueden crear y asignar.
+- Friend (Amigos/usuarios): Lista de amigos por defecto al instalar el app vienen ya agregados 5 amigos.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Arquitectura
+Arquitectura utilizada en el app:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Arquitectura](assets/architecture.jpg)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Instalación
+Para la instalación del proyecto debemos tener en cuenta las versiones de [Flutter](https://flutter.dev/).
+Importante instalar la depedencia de build_runner para generar los store.
+
+Clonar el repositorio:
+
+```sh
+git clone https://github.com/Sebastian-Beltran/prueba_interrapidisimo.git
+```
+
+Navegar al directorio del proyecto:
+
+```sh
+cd prueba_interrapidisimo
+```
+
+Instalar dependencias:
+
+```sh
+flutter pub get
+```
+
+Importante tambien generar los store con el comando:
+
+```sh
+dart run build_runner build —delete-conflicting-outputs
+```
+
+Para correr el proyecto se debe correr el siguiente comando:
+
+```sh
+flutter run
+```
+
+## Testing
+El proyecto cuenta con widget testing, con el siguiente comando:
+
+```sh
+flutter test
+```
+
+## Tecnologías Usadas
+- [Flutter](https://flutter.dev/) - Framework de desarrollo.
+- [Dart](https://dart.dev/) - Lenguaje de programación.
+- [MobX](https://pub.dev/packages/mobx) - Gestor de estados.
+- [Sqflite](https://pub.dev/packages/sqflite) - Base de datos local.
+
+## Autor
+- **Sebastian Beltran Gonzalez** - [GitHub](https://github.com/Sebastian-Beltran)
