@@ -12,7 +12,7 @@ El proyecto se compone principalmente por 2 features principales:
 ## Arquitectura
 Arquitectura utilizada en el app:
 
-![Arquitectura](assets/architecture.jpg)
+![Arquitectura](assets/architecture.png)
 
 ## Instalación
 Para la instalación del proyecto debemos tener en cuenta las versiones de [Flutter](https://flutter.dev/).
